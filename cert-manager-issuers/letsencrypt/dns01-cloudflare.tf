@@ -12,7 +12,7 @@ resource "kubernetes_secret" "letsencrypt_dns01_cloudflare_solver_secret" {
 
 resource "kubernetes_manifest" "letsencrypt_dns01_cloudflare_solver" {
   count   = length(kubernetes_secret.letsencrypt_dns01_cloudflare_solver_secret)
-  content = yamlencode(local.letsencrypt_dns01_cloudflare_solver)
+  manifest = yamlencode(local.letsencrypt_dns01_cloudflare_solver)
 }
 
 #output "default_issuer" {
@@ -20,13 +20,13 @@ resource "kubernetes_manifest" "letsencrypt_dns01_cloudflare_solver" {
 #  # var.foocrypt.default_issuer ?  var.foocrypt.name : ""
 #}
 
-locals {
-  type = object({
-    solvers = object({
-      var.name : var.solvers.dns01.cloudflare.default_issuer
-    })
-  })
-}
+#locals {
+#  type = object({
+#    solvers = object({
+#      var.name : var.solvers.dns01.cloudflare.default_issuer
+#    })
+#  })
+#}
      
 locals {
   letsencrypt_dns01_cloudflare_solver = {
