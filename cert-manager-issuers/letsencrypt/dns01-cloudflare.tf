@@ -10,7 +10,7 @@ resource "kubernetes_secret" "letsencrypt_dns01_cloudflare_solver_secret" {
   }
 }
 
-resource "k8s_manifest" "letsencrypt_dns01_cloudflare_solver" {
+resource "kubernetes_manifest" "letsencrypt_dns01_cloudflare_solver" {
   count   = length(kubernetes_secret.letsencrypt_dns01_cloudflare_solver_secret)
   content = yamlencode(local.letsencrypt_dns01_cloudflare_solver)
 }
