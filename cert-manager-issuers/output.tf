@@ -1,3 +1,3 @@
 output "default_issuer" {
-  value = var.letsencrypt.default_issuer
+  value = "${var.letsencrypt.name}-dns01-cloudflare"
 }
