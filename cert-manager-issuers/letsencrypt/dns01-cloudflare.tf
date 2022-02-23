@@ -15,10 +15,10 @@ resource "kubernetes_manifest" "letsencrypt_dns01_cloudflare_solver" {
   manifest = yamlencode(local.letsencrypt_dns01_cloudflare_solver)
 }
 
-#output "default_issuer" {
-#  value = var.solvers.dns01.cloudflare.default_issuer ? "${var.name}-dns01-cloudflare" : null
+output "default_issuer" {
+  value = var.solvers.dns01.cloudflare.default_issuer ? "${var.name}-dns01-cloudflare" : null
 #  # var.foocrypt.default_issuer ?  var.foocrypt.name : ""
-#}
+}
 
 #locals {
 #  type = object({
