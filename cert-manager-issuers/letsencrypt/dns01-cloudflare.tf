@@ -15,7 +15,7 @@ resource "kubernetes_manifest" "letsencrypt_dns01_cloudflare_solver" {
   #manifest = yamlencode(local.letsencrypt_dns01_cloudflare_solver)
   manifest = {
     apiVersion = "cert-manager.io/v1"
-    kind       = "ClusterIssuer"
+    kind       = ClusterIssuer
     metadata = {
       name = "${var.name}-dns01-cloudflare"
       labels = {
