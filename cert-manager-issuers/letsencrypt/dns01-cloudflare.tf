@@ -28,9 +28,6 @@ locals {
   })
 }
      
-
-
-
 locals {
   letsencrypt_dns01_cloudflare_solver = {
     apiVersion = "cert-manager.io/v1"
