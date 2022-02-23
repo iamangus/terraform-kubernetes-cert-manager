@@ -1,6 +1,6 @@
 resource "kubernetes_manifest" "validating_webhook_configuration" {
   manifest = {
-    "apiVersion" = "admissionregistration.k8s.io/v1beta1"
+    "apiVersion" = "admissionregistration.k8s.io/v1"
     "kind"       = "ValidatingWebhookConfiguration"
     "metadata" = {
       "name" = var.name
