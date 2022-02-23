@@ -12,7 +12,38 @@ resource "kubernetes_secret" "letsencrypt_dns01_cloudflare_solver_secret" {
 
 resource "kubernetes_manifest" "letsencrypt_dns01_cloudflare_solver" {
   count   = length(kubernetes_secret.letsencrypt_dns01_cloudflare_solver_secret)
-  manifest = yamlencode(local.letsencrypt_dns01_cloudflare_solver)
+  #manifest = yamlencode(local.letsencrypt_dns01_cloudflare_solver)
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "ClusterIssuer"
+    metadata = {
+      name = "${var.name}-dns01-cloudflare"
+      labels = {
+        name = "${var.name}-dns01-cloudflare"
+      }
+    }
+    spec = {
+      acme = {
+        server = var.server
+        email  = var.email
+        privateKeySecretRef = {
+          name = kubernetes_secret.letsencrypt_issuer_secret.metadata.0.name
+        }
+        solvers = [
+          {
+            dns01 = {
+              cloudflare = {
+                email = var.solvers.dns01.cloudflare != null ? var.solvers.dns01.cloudflare.email : null
+                apiTokenSecretRef = {
+                  name = kubernetes_secret.letsencrypt_dns01_cloudflare_solver_secret.0.metadata.0.name
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }  
 }
 
 output "default_issuer" {
