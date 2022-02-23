@@ -1,3 +1,3 @@
-locals {
-  letsencrypt = var.letsencrypt == null ? {} : var.letsencrypt
-}
+#locals {
+#  letsencrypt = var.letsencrypt == null ? {} : var.letsencrypt
+#}
