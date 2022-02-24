@@ -1,7 +1,7 @@
 resource "kubernetes_secret" "letsencrypt_dns01_cloudflare_solver_secret" {
   count = var.solvers.dns01.cloudflare != null ? 1 : 0
   metadata {
-    name      = var.name
+    name      = "${var.name}-dns01-cloudflare"
     namespace = var.namespace
   }
   data = {
