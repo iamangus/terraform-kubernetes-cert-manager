@@ -263,7 +263,9 @@ resource "kubernetes_cluster_role" "challenges_cluster_role" {
     verbs = ["get", "list", "watch", "create", "delete"]
   }
   rule {
-    api_groups = ["extensions"]
+    api_groups = [
+      "extensions", "networking.k8s.io"
+    ]
     resources = [
       "ingresses"
     ]
