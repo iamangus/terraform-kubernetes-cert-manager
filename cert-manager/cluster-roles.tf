@@ -267,7 +267,7 @@ resource "kubernetes_cluster_role" "challenges_cluster_role" {
       "extensions", "networking.k8s.io"
     ]
     resources = [
-      "ingresses"
+      "ingresses", "ingressclasses"
     ]
     verbs = ["get", "list", "watch", "create", "delete", "update"]
   }
