@@ -11,7 +11,7 @@ resource "kubernetes_cluster_role" "issuers_cluster_role" {
       "issuers",
       "issuers/status"
     ]
-    verbs = ["update"]
+    verbs = ["update", "patch"]
   }
   rule {
     api_groups = ["cert-manager.io"]
@@ -50,7 +50,7 @@ resource "kubernetes_cluster_role" "clusterissuers_cluster_role" {
       "clusterissuers",
       "clusterissuers/status"
     ]
-    verbs = ["update"]
+    verbs = ["update", "patch"]
   }
   rule {
     api_groups = ["cert-manager.io"]
@@ -90,7 +90,17 @@ resource "kubernetes_cluster_role" "certificates_cluster_role" {
       "certificaterequests",
       "certificaterequests/status"
     ]
-    verbs = ["update"]
+    verbs = ["update", "patch"]
+  }
+  rule {
+    api_groups = ["cert-manager.io"]
+    resources = [
+      "certificates",
+      "certificaterequests",
+      "clusterissuers",
+      "issuers"
+    ]
+    verbs = ["get", "list", "watch"]
   }
   # We require these rules to support users with the OwnerReferencesPermissionEnforcement
   # admission controller enabled:
@@ -271,6 +281,15 @@ resource "kubernetes_cluster_role" "challenges_cluster_role" {
     ]
     verbs = ["get", "list", "watch", "create", "delete", "update"]
   }
+  rule {
+    api_groups = [
+      "networking.x-k8s.io"
+    ]
+    resources = [
+      "httproutes"
+    ]
+    verbs = ["get", "list", "watch", "create", "delete", "update"]
+  }
   # We require these rules to support users with the OwnerReferencesPermissionEnforcement
   # admission controller enabled:
   # https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#ownerreferencespermissionenforcement
@@ -317,7 +336,7 @@ resource "kubernetes_cluster_role" "ingress_shim_cluster_role" {
     verbs = ["get", "list", "watch"]
   }
   rule {
-    api_groups = ["extensions"]
+    api_groups = ["extensions", "networking.k8s.io"]
     resources = [
       "ingresses"
     ]
@@ -327,9 +346,23 @@ resource "kubernetes_cluster_role" "ingress_shim_cluster_role" {
   # admission controller enabled:
   # https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#ownerreferencespermissionenforcement
   rule {
-    api_groups = ["extensions"]
+    api_groups = ["extensions", "networking.k8s.io"]
     resources = [
       "ingresses/finalizers"
+    ]
+    verbs = ["update"]
+  }
+  rule {
+    api_groups = ["networking.x-k8s.io"]
+    resources = [
+      "gateways", "httproutes"
+    ]
+    verbs = ["get", "list", "watch"]
+  }
+  rule {
+    api_groups = ["networking.x-k8s.io"]
+    resources = [
+      "gateways/finalizers", "httproutes/finalizers"
     ]
     verbs = ["update"]
   }
