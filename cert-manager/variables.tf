@@ -14,7 +14,7 @@ variable "namespace" {
 }
 variable "image_tag" {
   type    = string
-  default = "v1.4.0" #"v0.13.0"
+  default = "v1.7.1" #"v0.13.0"
 }
 variable "image_name" {
   type    = string
