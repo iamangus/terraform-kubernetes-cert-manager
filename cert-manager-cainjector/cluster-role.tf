@@ -29,6 +29,14 @@ resource "kubernetes_cluster_role" "cluster_role" {
     ]
     verbs = ["get", "create", "update", "patch"]
   }
+  
+  rule {
+    api_groups = [""]
+    resources = [
+      "configmaps"
+    ]
+    verbs = ["get", "create", "update"]
+  }
 
   rule {
     api_groups = ["admissionregistration.k8s.io"]
@@ -37,6 +45,14 @@ resource "kubernetes_cluster_role" "cluster_role" {
       "mutatingwebhookconfigurations"
     ]
     verbs = ["get", "list", "watch", "update"]
+  }
+  
+  rule {
+    api_groups = ["coordination.k8s.io"]
+    resources = [
+      "leases"
+    ]
+    verbs = ["create", "get", "update"]
   }
 
   rule {
